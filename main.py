@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime
 
 import aiohttp
 from more_itertools import chunked
@@ -6,7 +7,7 @@ from more_itertools import chunked
 from models import init_orm, Session, SwPeople
 
 
-MAX_REQUESTS = 5
+MAX_REQUESTS = 10
 
 async def get_people(session, id):   
     response = await session.get(f"https://swapi.dev/api/people/{id}")
@@ -66,4 +67,7 @@ async def main():
     all_tasks.remove(main_task)
     await asyncio.gather(*all_tasks)
 
+start = datetime.now()
 asyncio.run(main())
+
+print(datetime.now() - start)
